@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicaRiYa Real Estate</title>
+    <link rel="stylesheet" href="style/style.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+    //price slider
+    $( function() {
+        $( "#price-slider-range" ).slider({
+        range: true,
+        min: 0,
+        max: 300,
+        values: [ 0, 150 ],
+        slide: function( event, ui ) {
+            $( "#price-slider" ).val( "$" + ui.values[ 0 ] * 5000 + " - $" + ui.values[ 1 ] * 5000 );
+        }
+        });
+        $( "#price-slider" ).val( "$" + $( "#price-slider-range" ).slider( "values", 0 ) * 5000 +
+        " - $" + $( "#price-slider-range" ).slider( "values", 1 ) * 5000 );
+    } );
+
+    //radius slider
+    $( function() {
+        $( "#radius-slider-range" ).slider({
+        range: true,
+        min: 0,
+        max: 24,
+        values: [ 0, 6 ],
+        slide: function( event, ui ) {
+            $( "#radius-slider" ).val( ui.values[ 0 ] * 5 + " - " + ui.values[ 1 ] * 5 + " minutes");
+        }
+        });
+        $( "#radius-slider" ).val( $( "#radius-slider-range" ).slider( "values", 0 ) * 5 +
+        " - " + $( "#radius-slider-range" ).slider( "values", 1 ) * 5 + " minutes");
+    } );
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="title">MicaRiYa</div>
+        <div class="signin">
+            <a href="#signin">Sign in</a>
+            <img src="images/profile.png" alt="Profile" width="50" height="50">
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="mode-bar">
+            <button onclick="buy()" class="selected" id="buy">Buy</button>
+            <button onclick="sell()" class="unselected" id="sell">Sell</button>
+            <button onclick="rent()" class="unselected" id="rent">Rent</button>
+            <button onclick="preap()" class="unselected" id="preap">Preapproval</button>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" class="location-search" id="location" placeholder="Enter location: eg. St. Catharines">
+        </div>
+
+        <div class="main-content">
+            <div class="left-side">
+                <div class="filter-tab">
+                    <div class="filter">
+                        <label for="price-slider">Price range:</label>
+                        <input type="text" class="double-slider-label" id="price-slider" readonly>
+                    </div>
+                    <div id="price-slider-range" class="double-slider"></div>
+
+                    <div class="filter">
+                        <label for="radius-slider">Radius:</label>
+                        <input type="text" class="double-slider-label" id="radius-slider" readonly>
+                    </div>
+                    <div id="radius-slider-range" class="double-slider"></div>
+
+                    <div class="filter">
+                        Bedrooms
+                    </div>
+                    <select id="bedroom-select" class="select">
+                        <option value="one">1+</option>
+                        <option value="two">2+</option>
+                        <option value="three">3+</option>
+                        <option value="four">4+</option>
+                        <option value="five">5+</option>
+                        <option value="six">6+</option>
+                    </select>
+
+                    <div class="filter">
+                        Bathrooms
+                    </div>
+                    <select id="bathroom-select" class="select">
+                        <option value="one">1+</option>
+                        <option value="two">2+</option>
+                        <option value="three">3+</option>
+                        <option value="four">4+</option>
+                    </select>
+
+                    <div class="filter">
+                        Home type
+                    </div>
+                    <select id="home-select" class="select">
+                        <option value="all">All</option>
+                        <option value="house">Houses</option>
+                        <option value="town">Townhomes</option>
+                        <option value="multi">Multi-Family</option>
+                        <option value="condo">Condos/Co-ops</option>
+                        <option value="lot">Lots/Land</option>
+                        <option value="apartment">Apartments</option>
+                        <option value="manufactured">Manufactured</option>
+                    </select>
+                </div>
+
+                <div style="font-size: 18px; margin-top: 20px; margin-left: 20px;"><a href="#livechat">Live chat</a></div>
+            </div>
+
+            <div class="right-side">
+                Placeholder
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var prevMode = "buy"
+
+        function buy(){
+            document.getElementById(prevMode).classList.remove('selected');
+            document.getElementById(prevMode).classList.add('unselected');
+            document.getElementById("buy").classList.remove('unselected');
+            document.getElementById("buy").classList.add('selected');
+            prevMode = "buy"
+        }
+
+        function sell(){
+            document.getElementById(prevMode).classList.remove('selected');
+            document.getElementById(prevMode).classList.add('unselected');
+            document.getElementById("sell").classList.remove('unselected');
+            document.getElementById("sell").classList.add('selected');
+            prevMode = "sell"
+        }
+
+        function rent(){
+            document.getElementById(prevMode).classList.remove('selected');
+            document.getElementById(prevMode).classList.add('unselected');
+            document.getElementById("rent").classList.remove('unselected');
+            document.getElementById("rent").classList.add('selected');
+            prevMode = "rent"
+        }
+
+        function preap(){
+            document.getElementById(prevMode).classList.remove('selected');
+            document.getElementById(prevMode).classList.add('unselected');
+            document.getElementById("preap").classList.remove('unselected');
+            document.getElementById("preap").classList.add('selected');
+            prevMode = "preap"
+        }
+    </script>
+
+</body>
+</html>
