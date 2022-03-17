@@ -26,6 +26,12 @@
         " - $" + $( "#price-slider-range" ).slider( "values", 1 ) * 5000 );
     } );
 
+    $(function() {
+        $( "#price-slider-range" ).slider({
+            change:function() { shuffle(); }
+        });
+    });
+
     //radius slider
     $( function() {
         $( "#radius-slider-range" ).slider({
@@ -40,10 +46,16 @@
         $( "#radius-slider" ).val( $( "#radius-slider-range" ).slider( "values", 0 ) * 5 +
         " - " + $( "#radius-slider-range" ).slider( "values", 1 ) * 5 + " minutes");
     } );
+
+    $(function() {
+        $( "#radius-slider-range" ).slider({
+            change:function() { shuffle(); }
+        });
+    });
     </script>
 </head>
 
-<body>
+<body onLoad="shuffle()">
     <div class="header">
         <div class="title">MicaRiYa</div>
         <div class="signin">
@@ -61,7 +73,7 @@
         </div>
         
         <div class="search-bar">
-            <input type="text" class="location-search" id="location" placeholder="Enter location: eg. St. Catharines">
+            <input type="text" class="location-search" id="location" placeholder="Enter location: eg. St. Catharines" onChange="shuffle()">
         </div>
 
         <div class="main-content">
@@ -71,18 +83,18 @@
                         <label for="price-slider">Price range:</label>
                         <input type="text" class="double-slider-label" id="price-slider" readonly>
                     </div>
-                    <div id="price-slider-range" class="double-slider"></div>
+                    <div id="price-slider-range" class="double-slider" onChange="shuffle()"></div>
 
                     <div class="filter">
                         <label for="radius-slider">Radius:</label>
                         <input type="text" class="double-slider-label" id="radius-slider" readonly>
                     </div>
-                    <div id="radius-slider-range" class="double-slider"></div>
+                    <div id="radius-slider-range" class="double-slider" onChange="shuffle()"></div>
 
                     <div class="filter">
                         Bedrooms
                     </div>
-                    <select id="bedroom-select" class="select">
+                    <select id="bedroom-select" class="select" onChange="shuffle()">
                         <option value="one">1+</option>
                         <option value="two">2+</option>
                         <option value="three">3+</option>
@@ -94,7 +106,7 @@
                     <div class="filter">
                         Bathrooms
                     </div>
-                    <select id="bathroom-select" class="select">
+                    <select id="bathroom-select" class="select" onChange="shuffle()">
                         <option value="one">1+</option>
                         <option value="two">2+</option>
                         <option value="three">3+</option>
@@ -104,7 +116,7 @@
                     <div class="filter">
                         Home type
                     </div>
-                    <select id="home-select" class="select">
+                    <select id="home-select" class="select" onChange="shuffle()">
                         <option value="all">All</option>
                         <option value="house">Houses</option>
                         <option value="town">Townhomes</option>
@@ -116,12 +128,10 @@
                     </select>
                 </div>
 
-                <div style="font-size: 18px; margin-top: 20px; margin-left: 20px;"><a href="#livechat">Live chat</a></div>
+                <div style="font-size: 18px; position: fixed; bottom: 20px; left: 20px;"><a href="#livechat">Live chat</a></div>
             </div>
 
-            <div class="right-side">
-                Placeholder
-            </div>
+            <div class="right-side" id="right-side"><div class="house-display">hello</div></div>
         </div>
     </div>
 
@@ -133,6 +143,8 @@
             document.getElementById(prevMode).classList.add('unselected');
             document.getElementById("buy").classList.remove('unselected');
             document.getElementById("buy").classList.add('selected');
+
+            if(prevMode=="rent") shuffle();
             prevMode = "buy"
         }
 
@@ -149,6 +161,8 @@
             document.getElementById(prevMode).classList.add('unselected');
             document.getElementById("rent").classList.remove('unselected');
             document.getElementById("rent").classList.add('selected');
+
+            if(prevMode=="buy") shuffle();
             prevMode = "rent"
         }
 
@@ -158,6 +172,19 @@
             document.getElementById("preap").classList.remove('unselected');
             document.getElementById("preap").classList.add('selected');
             prevMode = "preap"
+        }
+
+        function shuffle(){
+            document.getElementById("right-side").innerHTML = '';
+
+            for (let index = 0; index < 20; index++) {
+                var div = document.createElement('div');
+                div.innerHTML = Math.random();
+                div.className = 'house-display';
+                div.style.gridColumn = (index % 3) + 1;
+                div.style.gridRow = (index / 3) + 1;
+                document.getElementById("right-side").appendChild(div);
+            }
         }
     </script>
 
