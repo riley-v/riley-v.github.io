@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MicaRiYa Real Estate</title>
     <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/index-style.css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -55,7 +56,7 @@
     </script>
 </head>
 
-<body onLoad="shuffle()">
+<body onLoad="setMode()">
     <div class="header">
         <div class="title">MicaRiYa</div>
         <div class="signin">
@@ -130,17 +131,34 @@
                     </select>
                 </div>
 
-                <div style="font-size: 18px; position: fixed; bottom: 20px; left: 20px;"><a href="#livechat">Live chat</a></div>
+                <div class="chat-popup" id="chat-window">
+                    <form style="width: 300px; height: 175px;">
+                        <textarea class="chat-text" id="chat-text" onchange="giveAnswer()" placeholder="Type message..."></textarea>
+                    </form>
+                </div>
+
+                <div style="font-size: 18px; position: fixed; bottom: 20px; left: 20px;"><a href="javascript:openChat()">Live chat</a></div>
             </div>
 
-            <div class="right-side" id="right-side"><div class="house-display">hello</div></div>
+            <div class="right-side" id="right-side"></div>
         </div>
     </div>
 
     <script>
         const STREETS = ["Tudor Corner", "Revesby Corner", "Stockman's Avenue", "Beech Meadow", "Radcliffe Drive", "Procters Drive", "Elms Walk", "Knowlesly Meadows", "Marsden Way", "Chewells Close"];
+        const CITIES = ["Welland", "St. Catharines", "Vineland", "Beamsville", "Grimsby", "Hamilton", "Toronto"]
 
-        var mode = "buy"
+        var mode = "buy";
+
+        function setMode(){
+            if(localStorage.getItem("new-mode") == "rent"){
+                //if previous page set mode to rent, change page to rent mode and populate with houses
+                rent();
+            }else{
+                //otherwise populate with houses in the default mode: buy
+                shuffle();
+            }
+        }
 
         function buy(){
             document.getElementById(mode).classList.remove('selected');
@@ -153,11 +171,7 @@
         }
 
         function sell(){
-            document.getElementById(mode).classList.remove('selected');
-            document.getElementById(mode).classList.add('unselected');
-            document.getElementById("sell").classList.remove('unselected');
-            document.getElementById("sell").classList.add('selected');
-            mode = "sell";
+            window.location.href = "sell.html";
         }
 
         function rent(){
@@ -171,11 +185,7 @@
         }
 
         function preap(){
-            document.getElementById(mode).classList.remove('selected');
-            document.getElementById(mode).classList.add('unselected');
-            document.getElementById("preap").classList.remove('unselected');
-            document.getElementById("preap").classList.add('selected');
-            mode = "preap";
+            window.location.href = "preap.html";
         }
 
         function shuffle(){
@@ -196,8 +206,8 @@
                     var price = (Math.floor(Math.random() * 99) + 1) * 1000;
                     priceFormat = "C" + price.toLocaleString() + "$/mo";
                 }
-                var street = (Math.floor(Math.random() * 5000) + 1) + " " + STREETS[Math.floor(Math.random() * 10)];
-                var info = (Math.floor(Math.random() * 5) + 1) + " beds " + (Math.floor(Math.random() * 4) + 1) + " baths " + (Math.floor(Math.random() * 2000) + 1001) + " sqft"
+                var street = (Math.floor(Math.random() * 5000) + 1) + " " + STREETS[Math.floor(Math.random() * 10)] + ", " + CITIES[Math.floor(Math.random() * 7)];
+                var info = (Math.floor(Math.random() * 5) + 1) + " bd " + (Math.floor(Math.random() * 4) + 1) + " ba " + (Math.floor(Math.random() * 2000) + 1001) + " sqft"
 
                 html = html + "\n" + "<div class=\"house-info\"><p>" + priceFormat + "</p><p>" + street + "</p><p>" + info + "</p></div>";
 
@@ -207,6 +217,19 @@
                 div.style.gridRow = (index / 3) + 1;
                 document.getElementById("right-side").appendChild(div);
             }
+        }
+
+        function openChat() {
+            var chat = document.getElementById("chat-window");
+            if(chat.style.display == "block"){
+                chat.style.display = "none";
+            }else{
+                chat.style.display = "block";
+            }
+        }
+
+        function giveAnswer() {
+            document.getElementById("chat-text").value += "\nIncredibly helpful answer"
         }
     </script>
 
