@@ -71,7 +71,6 @@
                 <button onclick="buy()" class="selected" id="buy">Buy</button>
                 <button onclick="sell()" class="unselected" id="sell">Sell</button>
                 <button onclick="rent()" class="unselected" id="rent">Rent</button>
-                <button onclick="preap()" class="unselected" id="preap">Preapproval</button>
             </div>
         </div>
         
@@ -141,11 +140,14 @@
             </div>
 
             <div class="right-side" id="right-side"></div>
+
+            <div class="house-popup" id="house-popup">
+            </div>
         </div>
     </div>
 
     <script>
-        const STREETS = ["Tudor Corner", "Revesby Corner", "Stockman's Avenue", "Beech Meadow", "Radcliffe Drive", "Procters Drive", "Elms Walk", "Knowlesly Meadows", "Marsden Way", "Chewells Close"];
+        const STREETS = ["Tudor Corner", "Revesby Corner", "Stockman Avenue", "Beech Meadow", "Radcliffe Drive", "Procters Drive", "Elms Walk", "Knowlesly Meadows", "Marsden Way", "Chewells Close"];
         const CITIES = ["Welland", "St. Catharines", "Vineland", "Beamsville", "Grimsby", "Hamilton", "Toronto"]
 
         var mode = "buy";
@@ -184,10 +186,6 @@
             shuffle();
         }
 
-        function preap(){
-            window.location.href = "preap.html";
-        }
-
         function shuffle(){
             document.getElementById("right-side").innerHTML = '';
 
@@ -196,19 +194,20 @@
                 var html = "";
 
                 var imgNum = Math.floor(Math.random() * 10) + 1;
-                var html = "<div class=\"house-pic\"><img src=\"images/" + imgNum + ".jpg\" alt=\"Profile\" style=\"width:80%;\"></div>";
 
                 var priceFormat;
+                var price;
                 if(mode == "buy"){
-                    var price = (Math.floor(Math.random() * 149) + 1) * 10000 + 9000;
+                    price = (Math.floor(Math.random() * 149) + 1) * 10000 + 9000;
                     priceFormat = "C" + price.toLocaleString() + "$";
                 }else{
-                    var price = (Math.floor(Math.random() * 99) + 1) * 1000;
+                    price = (Math.floor(Math.random() * 47) + 1) * 100 + 200;
                     priceFormat = "C" + price.toLocaleString() + "$/mo";
                 }
                 var street = (Math.floor(Math.random() * 5000) + 1) + " " + STREETS[Math.floor(Math.random() * 10)] + ", " + CITIES[Math.floor(Math.random() * 7)];
                 var info = (Math.floor(Math.random() * 5) + 1) + " bd " + (Math.floor(Math.random() * 4) + 1) + " ba " + (Math.floor(Math.random() * 2000) + 1001) + " sqft"
 
+                var html = "<div class=\"house-pic\" onclick=\"showHouse(" + imgNum + "," + price + ",\'" + street + "\')\"><img src=\"images/" + imgNum + ".jpg\" alt=\"Profile\" style=\"width:80%;\"></div>";
                 html = html + "\n" + "<div class=\"house-info\"><p>" + priceFormat + "</p><p>" + street + "</p><p>" + info + "</p></div>";
 
                 div.innerHTML = html;
@@ -217,6 +216,31 @@
                 div.style.gridRow = (index / 3) + 1;
                 document.getElementById("right-side").appendChild(div);
             }
+        }
+
+        function showHouse(imgNum, offer, streetInfo) {
+            var house = document.getElementById("house-popup");
+            house.style.display = "flex";
+
+            var html = "<img src=\"images/" + imgNum + ".jpg\" alt=\"Profile\" style=\"width:100%; padding-top:5px; padding-bottom:5px;\">";
+            html = html + "\n" + "<div class=\"house-offer\">" + streetInfo + "</div>";
+            html = html + "\n" + "<div class=\"house-offer\">Offer: $<input type=\"number\" min=\"0.00\" step=\"1000.00\" max=\"2000000.00\" value=\"" + offer + "\" style=\"font-size: 15\";></div>";
+            html = html + "<button type=\"button\" onclick=\"placeOffer()\" class=\"house-button\" id=\"offer\">Place Offer</button>";
+            html = html + "<button type=\"button\" onclick=\"hideHouse()\" class=\"house-button\">Back</button>";
+            house.innerHTML = html;
+        }
+
+        function placeOffer(){
+            var button = document.getElementById("offer");
+            if(button.innerHTML == "Place Offer"){
+                button.innerHTML = "Withdraw Offer";
+            }else{
+                button.innerHTML = "Place Offer";
+            }
+        }
+
+        function hideHouse(){
+            document.getElementById("house-popup").style.display = "none";
         }
 
         function openChat() {

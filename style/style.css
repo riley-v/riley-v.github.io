@@ -64,7 +64,6 @@ a {
 }
 
 .mode-container {
-    width: 350px;
     height: 100%;
     position: relative;
     justify-content: space-around;
@@ -72,6 +71,7 @@ a {
 
 .selected {
     height: 40px;
+    width: 120px;
     font-size: 24px;
     color: black;
     border: none;
@@ -80,6 +80,7 @@ a {
 
 .unselected {
     height: 40px;
+    width: 120px;
     font-size: 24px;
     color: black;
     border: none;

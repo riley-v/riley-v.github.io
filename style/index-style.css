@@ -104,6 +104,10 @@
     background-color: #3d8aff;
 }
 
+.house-pic:hover {
+    cursor: pointer;
+}
+
 .house-info{
     height: 100%;
     margin-top: 5px;
@@ -115,4 +119,38 @@
 
 p {
     margin: 0 0 0 0;
+}
+
+.house-popup {
+    width: 400px;
+    height: 375px;
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    border: 3px solid #3d8aff;
+    top: 50%;
+    margin-top: -200px;
+    left: 50%;
+    margin-left: -200px;
+    background: white;
+    z-index: 9;
+    justify-content: center;
+}
+
+.house-offer {
+    margin-left: 10px;
+    margin-bottom: 5px;
+    font-size: 15;
+}
+
+.house-button {
+    height: 40px;
+    font-size: 15px;
+    color: black;
+    border: none;
+    background: none;
+}
+
+.house-button:hover{
+    background: #C4C4C4;
 }
