@@ -1,0 +1,30 @@
+.main-content {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1;
+    background: #c4c4c4;
+    top: 60px;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -170px;
+    gap: 50px;
+}
+
+.logout-button {
+    height: 40px;
+    font-size: 18px;
+    border: none;
+    color: black;
+    background: none;
+    margin-bottom: 20px;
+}
+
+.logout-button:hover{
+    color: white;
+    background: #3d8aff;
+}
